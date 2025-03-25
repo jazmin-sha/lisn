@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Inject,
@@ -29,9 +30,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('whyWeSection') whyWeSection!: ElementRef;
   @ViewChild('footerSection') footerSection!: ElementRef;
 
-  constructor(private renderer: Renderer2) {}
+  text: string =
+    'In case people forgot to tell you today, You are beautiful ♥ In case people forgot to tell you today, You are beautiful ♥ ';
+  wavyText: any;
+
+  services = [
+    {
+      name: 'STRATEGY',
+      content:
+        'RE-BRANDING, PACKAGING, BRAND GUIDELINES, BRAND ASSETS, PHOTOGRAPHY, GLOBAL TOOLKITS',
+    },
+    {
+      name: 'BRANDING',
+      content:
+        ' RE-BRANDING, BRAND GUIDELINES, BRAND ASSETS, PHOTOGRAPHY, GLOBAL TOOLKITS',
+    },
+    {
+      name: 'CAMPAIGN',
+      content: 'ADVERTISING, SOCIAL MEDIA MARKETING, SEO STRATEGY, COPYWRITING',
+    },
+    {
+      name: 'DIGITAL',
+      content: 'WEBSITE DEVELOPMENT, APP DESIGN, UI/UX DESIGN, ANALYTICS',
+    },
+  ];
+  selectedContent = '';
+
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.wavyText = this.text.split('').map((char, index) => ({
+      char: char,
+      index: index,
+    }));
+
     setTimeout(() => {
       const aboutSection = document.getElementById('about');
       if (aboutSection) {
@@ -122,5 +154,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         block: 'start',
       });
     }
+  }
+
+  updateContent(content: string) {
+    this.selectedContent = content;
+    console.log('Hovering:', this.selectedContent);
+    this.cdr.detectChanges();
+  }
+
+  clearContent() {
+    this.selectedContent = '';
+    this.cdr.detectChanges();
   }
 }

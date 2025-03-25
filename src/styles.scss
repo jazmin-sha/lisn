@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Super Dream";
+  src: url("/assets/fonts/Super Dream.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100%;
@@ -15,7 +22,7 @@ a {
 
 p {
   --bs-text-opacity: 1;
-  color: rgb(203 185 171) !important;
+  color: rgb(205, 205, 205) !important;
 }
 
 .section {
@@ -209,8 +216,8 @@ p {
   width: 48px; /* Adjust width for 2x2 grid */
   height: 48px; /* Adjust height for 2x2 grid */
   position: fixed;
-  top: 42px;
-  right: 34px;
+  top: 26px;
+  right: 22px;
   cursor: pointer;
   z-index: 1000; /* Ensure it's above other elements */
 }
@@ -266,80 +273,253 @@ p {
 }
 
 /* wavy text */
+// .wavy-text-container {
+//   position: relative;
+//   width: 100%;
+//   background-color: black;
+//   overflow: hidden;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100px;
+// }
+
+// .wavy-text {
+//   font-size: 24px;
+//   font-weight: bold;
+//   color: white;
+//   white-space: nowrap;
+//   animation: move-wave 12s linear infinite;
+// }
+
+// @keyframes move-wave {
+//   0% {
+//     transform: translateX(100%) translateX(calc(sin(0deg * 2) * 20px));
+//   }
+//   100% {
+//     transform: translateX(-100%) translateX(calc(sin(360deg * 2) * 20px));
+//   }
+// }
+
 .wavy-text-container {
   position: relative;
   width: 100%;
   background-color: black;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 200px;
+  overflow: hidden;
 }
 
 .wavy-text {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   color: white;
+  display: flex;
   white-space: nowrap;
-  animation: move-wave 12s linear infinite;
+}
+
+.wavy-text span {
+  display: inline-block;
+  margin-right: 2px; /* Natural spacing */
+  animation: wave-motion 6s infinite ease-in-out;
+  animation-delay: calc(var(--index) * 120ms);
 }
 
 @keyframes move-wave {
   0% {
-    transform: translateX(100%) translateX(calc(sin(0deg * 2) * 20px));
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(-100%) translateX(calc(sin(360deg * 2) * 20px));
+    transform: translateX(-100%);
   }
 }
+
+/* Wave effect */
+@keyframes wave-motion {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-25px); /* Keeping the high wave */
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(25px); /* Keeping the deep wave */
+  }
+}
+
 /* service section */
-.service-card {
-  margin-bottom: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.services-section {
+  background: #000000;
+  text-align: center;
+  padding: 80px 20px;
 }
 
-.card-body {
-  padding: 20px;
+.services-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #efefef;
+  font-family: "Super Dream", sans-serif;
 }
 
-.card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.card-text {
-  font-size: 1rem;
-  color: #6c757d;
-}
-
-.service-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.row {
+.services-wrapper {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
+  position: relative;
+  width: 100%;
 }
 
-.col-8 {
+.services-list {
+  margin-top: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 30%;
 }
 
-.col-4 {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+.service-item {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #e63946;
+  text-transform: uppercase;
+  margin: 10px 0;
+  transition: color 0.3s, text-decoration 0.3s;
+  cursor: pointer;
+  color: var(--red);
+  text-align: left;
+  font-family: "Super Dream", sans-serif;
+  font-size: 5.2rem;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 20px; /* Space for SVG */
 }
 
-.card-text {
-  margin-top: 15px;
+.service-item::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: -30px; /* Increase spacing */
+  width: 200%; /* Increase width */
+  height: 160%; /* Increase height */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* Ensures full scaling */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: scale(0.8);
+}
+
+.service-item:hover::after {
+  opacity: 1;
+  transform: scale(1.2); /* Slight zoom-in effect */
+}
+
+/* Assign different SVGs for each item */
+.strategy::after {
+  background-image: url("/assets/vibrationwithtext.svg");
+}
+
+.branding::after {
+  background-image: url("/assets/roundwithtext.svg");
+}
+
+.campaign::after {
+  background-image: url("/assets/cloudwithtext.svg");
+}
+
+.digital::after {
+  background-image: url("/assets/wavewithtext.svg");
+}
+
+.service-item:hover::after {
+  opacity: 1;
+}
+
+.service-item .arrow {
+  position: absolute;
+  right: -20px; /* Adjust arrow position */
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.service-item:hover {
+  color: #ffffff;
+  // text-decoration: underline;
+}
+.service-item:hover {
+  color: #e63946; /* Change text color on hover */
+}
+
+.service-item:hover ul li {
+  color: #e63946; /* Ensure list items also change color */
+}
+
+.service-item ul li {
+  transition: color 0.3s ease-in-out; /* Smooth transition */
+}
+
+.services-svg {
+  margin-top: 96px;
+  margin-bottom: 1rem;
+  width: auto; /* Adjust width as needed */
+  height: auto; /* Adjust height as needed */
+  cursor: none;
+}
+
+/* Right Side Content - Hidden by Default */
+.service-content {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
+  width: 60%;
+  padding-left: 20px;
+  visibility: hidden; /* Use visibility instead of display */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  display: none;
+}
+
+/* Show on Hover */
+.service-content.show {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+// footer starts
+
+.footer-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.footer-subscription input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.footer img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
 }
 
 /* Hamburger Icon (Three Lines) */
